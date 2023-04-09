@@ -5,7 +5,7 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = function (env = {}) {
-  const outputPath = path.resolve(__dirname, env.outputPath || "docs");
+  const outputPath = path.resolve(__dirname, env.outputPath || "dist");
 
   const output = {
     path: outputPath,

@@ -24,7 +24,7 @@ function checkChapter(fileName) {
 (async function () {
   await buildTask({ production: true });
 
-  const root = path.resolve(__dirname, "../docs");
+  const root = path.resolve(__dirname, "../dist");
   const pa = fs.readdirSync(root);
   const pages = pa
     .map((el) => {
@@ -85,5 +85,5 @@ function checkChapter(fileName) {
   `;
 
   // console.log(output);
-  fs.writeFileSync("./docs/index.html", output);
+  fs.writeFileSync("./dist/index.html", output);
 })();

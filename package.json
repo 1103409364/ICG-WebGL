@@ -28,7 +28,7 @@
     "chapter10": "webpack-dev-server --env.server=chapter10",
     "chapter11": "webpack-dev-server --env.server=chapter11",
     "chapter12": "webpack-dev-server --env.server=chapter12",
-    "build": "rm -rf docs && node ./scripts/build.js && echo 'webgl.group' > docs/CNAME",
+    "build": "rm -rf dist && node ./scripts/build.js && echo 'webgl.group' > dist/CNAME",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src",
     "lint-fix": "eslint --ext .js,.html src --fix",
