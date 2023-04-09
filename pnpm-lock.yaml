@@ -43,12 +43,15 @@ devDependencies:
   eslint:
     specifier: ^8.38.0
     version: 8.38.0
+  eslint-config-prettier:
+    specifier: ^8.3.0
+    version: 8.3.0(eslint@8.38.0)
   eslint-plugin-html:
     specifier: ^7.1.0
     version: 7.1.0
   eslint-plugin-prettier:
     specifier: ^4.2.1
-    version: 4.2.1(eslint@8.38.0)(prettier@2.8.7)
+    version: 4.2.1(eslint-config-prettier@8.3.0)(eslint@8.38.0)(prettier@2.8.7)
   extrude-polyline:
     specifier: ^1.0.6
     version: 1.0.6
@@ -2744,13 +2747,22 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /eslint-config-prettier@8.3.0(eslint@8.38.0):
+    resolution: {integrity: sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.38.0
+    dev: true
+
   /eslint-plugin-html@7.1.0:
     resolution: {integrity: sha512-fNLRraV/e6j8e3XYOC9xgND4j+U7b1Rq+OygMlLcMg+wI/IpVbF+ubQa3R78EjKB9njT6TQOlcK5rFKBVVtdfg==}
     dependencies:
       htmlparser2: 8.0.2
     dev: true
 
-  /eslint-plugin-prettier@4.2.1(eslint@8.38.0)(prettier@2.8.7):
+  /eslint-plugin-prettier@4.2.1(eslint-config-prettier@8.3.0)(eslint@8.38.0)(prettier@2.8.7):
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -2762,6 +2774,7 @@ packages:
         optional: true
     dependencies:
       eslint: 8.38.0
+      eslint-config-prettier: 8.3.0(eslint@8.38.0)
       prettier: 2.8.7
       prettier-linter-helpers: 1.0.0
     dev: true

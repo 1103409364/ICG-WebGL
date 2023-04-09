@@ -17,9 +17,9 @@
     // }
   },
   "rules": {
-    "camelcase": 2,
-    "no-console": 1,
-    "no-debugger": 1
+    "camelcase": 2
+    // "no-console": 1,
+    // "no-debugger": 1
     // "complexity": ["warn", 25]
   },
   "overrides": [
