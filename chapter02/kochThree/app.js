@@ -39,11 +39,22 @@ function init() {
   const vertices = [vec3(-0.5, -0.5, 0), vec3(0, 0.5, 0), vec3(0.5, -0.5, 0)];
 
   divideTriangle(...vertices);
-
-  const lines = new THREE.Geometry();
+  // To convert the Geometry to BufferGeometry:
+  // 1. Replace the THREE.Geometry instance with THREE.BufferGeometry.
+  // 2. Create a Float32Array to store the vertex data.
+  // 3. Iterate over the points array and push the x, y, and z coordinates of each vertex to the Float32Array.
+  // 4. Set the attribute of the BufferGeometry to the Float32Array using the setAttribute() method.
+  // 5. Update any references to the vertices property of the THREE.Geometry instance to refer to the new BufferAttribute instance.
+  const vertexData = new Float32Array(points.length * 3);
+  let index = 0;
   points.forEach((e) => {
-    lines.vertices.push(new THREE.Vector3(e[0], e[1], e[2]));
+    vertexData[index++] = e[0];
+    vertexData[index++] = e[1];
+    vertexData[index++] = e[2];
   });
+
+  const bufferGeometry = new THREE.BufferGeometry();
+  bufferGeometry.setAttribute("position", new THREE.BufferAttribute(vertexData, 3));
 
   const material = new THREE.LineBasicMaterial({
     opacity: 1.0,
@@ -51,7 +62,7 @@ function init() {
     color: 0xff0000,
   });
 
-  const line = new THREE.Line(lines, material);
+  const line = new THREE.Line(bufferGeometry, material);
 
   scene.add(line);
 
@@ -59,4 +70,5 @@ function init() {
 
   renderer.render(scene, camera);
 }
+
 init();

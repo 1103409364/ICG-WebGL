@@ -26,7 +26,7 @@ function init() {
   );
 
   const points = curve.getPoints(50).map(({ x, y }) => new THREE.Vector3(x, y, 0));
-  const geometry = new THREE.Geometry().setFromPoints(points);
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
   const line = new MeshLine();
   line.setGeometry(geometry);
