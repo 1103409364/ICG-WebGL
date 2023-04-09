@@ -1,8 +1,8 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 
@@ -10,7 +10,7 @@ const points = [];
 const numTimesToSubdivide = 5;
 
 function divideTriangle(a, b, c, count = numTimesToSubdivide) {
-  if(count <= 0) {
+  if (count <= 0) {
     points.push(a, b, c);
   } else {
     const ab = vec2.lerp(a, b, 0.5);
@@ -26,11 +26,11 @@ function divideTriangle(a, b, c, count = numTimesToSubdivide) {
 }
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
+  const canvas = document.getElementById("gl-canvas");
   gl = setupWebGL(canvas);
 
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
   //
@@ -39,11 +39,7 @@ function init() {
 
   // First, initialize the corners of our gasket with three points.
 
-  const vertices = [
-    vec2(-1, -1),
-    vec2(0, 1),
-    vec2(1, -1),
-  ];
+  const vertices = [vec2(-1, -1), vec2(0, 1), vec2(1, -1)];
 
   divideTriangle(...vertices);
 
@@ -65,7 +61,7 @@ function init() {
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 

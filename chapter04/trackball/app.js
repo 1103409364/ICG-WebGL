@@ -1,9 +1,9 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec3, vec4} from 'gl-matrix';
-import colorString from 'color-string';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec3, vec4 } from "gl-matrix";
+import colorString from "color-string";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 
@@ -20,8 +20,7 @@ let trackingMouse = false;
 let trackballMove = false;
 
 let lastPos = [0, 0, 0];
-let startX,
-  startY;
+let startX, startY;
 
 function multq(a, b) {
   const s = vec3(a[1], a[2], a[3]);
@@ -39,7 +38,7 @@ function trackballView(x, y) {
 
   const d = v[0] * v[0] + v[1] * v[1];
 
-  if(d < 1.0) {
+  if (d < 1.0) {
     v[2] = Math.sqrt(1.0 - d);
   } else {
     v[2] = 0.0;
@@ -51,18 +50,16 @@ function trackballView(x, y) {
 }
 
 function mouseMotion(x, y) {
-  let dx,
-    dy,
-    dz;
+  let dx, dy, dz;
 
   const curPos = trackballView(x, y);
 
-  if(trackingMouse) {
+  if (trackingMouse) {
     dx = curPos[0] - lastPos[0];
     dy = curPos[1] - lastPos[1];
     dz = curPos[2] - lastPos[2];
 
-    if(dx || dy || dz) {
+    if (dx || dy || dz) {
       angle = 0.5 * Math.sqrt(dx ** 2 + dy ** 2 + dz ** 2);
 
       axis[0] = lastPos[1] * curPos[2] - lastPos[2] * curPos[1];
@@ -87,7 +84,7 @@ function startMotion(x, y) {
 
 function stopMotion(x, y) {
   trackingMouse = false;
-  if(startX === x && startY === y) {
+  if (startX === x && startY === y) {
     angle = 0.0;
     trackballMove = false;
   }
@@ -113,18 +110,11 @@ const vertices = [
   vec4(0.5, -0.5, -0.5, 1.0),
 ];
 
-const vertexColors = [
-  'black',
-  'red',
-  'yellow',
-  'green',
-  'blue',
-  'magenta',
-  'cyan',
-  'white',
-].map((color) => {
-  return colorString.get(color).value.slice(0, 3);
-});
+const vertexColors = ["black", "red", "yellow", "green", "blue", "magenta", "cyan", "white"].map(
+  (color) => {
+    return colorString.get(color).value.slice(0, 3);
+  },
+);
 
 // console.log(vertexColors);
 
@@ -136,7 +126,7 @@ function quad(a, b, c, d) {
   // vertex color assigned by the index of the vertex
   const indices = [a, b, c, a, c, d];
 
-  for(let i = 0; i < indices.length; ++i) {
+  for (let i = 0; i < indices.length; ++i) {
     points.push(vertices[indices[i]]);
     // colors.push( vertexColors[indices[i]] );
 
@@ -145,14 +135,13 @@ function quad(a, b, c, d) {
   }
 }
 
-
 function init() {
-  const canvas = document.getElementById('gl-canvas');
-  const {width, height} = canvas;
+  const canvas = document.getElementById("gl-canvas");
+  const { width, height } = canvas;
 
   gl = setupWebGL(canvas);
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
   colorCube();
@@ -172,7 +161,7 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(colors, Uint8Array), gl.STATIC_DRAW);
 
-  const vColor = gl.getAttribLocation(program, 'vColor');
+  const vColor = gl.getAttribLocation(program, "vColor");
   gl.vertexAttribPointer(vColor, 3, gl.UNSIGNED_BYTE, true, 0, 0);
   gl.enableVertexAttribArray(vColor);
 
@@ -180,29 +169,29 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
   rotationQuaternion = vec4(1, 0, 0, 0);
-  rotationQuaternionLoc = gl.getUniformLocation(program, 'r');
+  rotationQuaternionLoc = gl.getUniformLocation(program, "r");
   gl.uniform4fv(rotationQuaternionLoc, rotationQuaternion);
 
-  canvas.addEventListener('mousedown', (event) => {
-    const x = 2 * event.clientX / width - 1;
-    const y = 2 * (height - event.clientY) / height - 1;
+  canvas.addEventListener("mousedown", (event) => {
+    const x = (2 * event.clientX) / width - 1;
+    const y = (2 * (height - event.clientY)) / height - 1;
     startMotion(x, y);
   });
 
-  canvas.addEventListener('mouseup', (event) => {
-    const x = 2 * event.clientX / width - 1;
-    const y = 2 * (height - event.clientY) / height - 1;
+  canvas.addEventListener("mouseup", (event) => {
+    const x = (2 * event.clientX) / width - 1;
+    const y = (2 * (height - event.clientY)) / height - 1;
     stopMotion(x, y);
   });
 
-  canvas.addEventListener('mousemove', (event) => {
-    const x = 2 * event.clientX / width - 1;
-    const y = 2 * (height - event.clientY) / height - 1;
+  canvas.addEventListener("mousemove", (event) => {
+    const x = (2 * event.clientX) / width - 1;
+    const y = (2 * (height - event.clientY)) / height - 1;
     mouseMotion(x, y);
   });
 
@@ -212,7 +201,7 @@ function init() {
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  if(trackballMove) {
+  if (trackballMove) {
     axis = vec3.normalize(axis);
     const c = Math.cos(angle / 2.0);
     const s = Math.sin(angle / 2.0);

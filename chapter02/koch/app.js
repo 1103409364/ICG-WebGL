@@ -1,8 +1,8 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 
@@ -13,7 +13,7 @@ function divideLineSegment(a, b, depth = 0) {
   const c = vec2.lerp(a, b, 1 / 3);
   const d = vec2.lerp(a, b, 2 / 3);
   const e = vec2.rotate(d, c, Math.PI / 3);
-  if(depth < MAX_DEPTH) {
+  if (depth < MAX_DEPTH) {
     depth++;
     divideLineSegment(a, c, depth);
     divideLineSegment(c, e, depth);
@@ -31,18 +31,14 @@ function divideTriangle(a, b, c) {
 }
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
+  const canvas = document.getElementById("gl-canvas");
   gl = setupWebGL(canvas);
 
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
-  const vertices = [
-    vec2(-0.5, -0.5),
-    vec2(0, 0.5),
-    vec2(0.5, -0.5),
-  ];
+  const vertices = [vec2(-0.5, -0.5), vec2(0, 0.5), vec2(0.5, -0.5)];
 
   divideTriangle(...vertices);
 
@@ -64,7 +60,7 @@ function init() {
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 

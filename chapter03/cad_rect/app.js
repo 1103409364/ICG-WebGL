@@ -1,26 +1,26 @@
-import {createProgram, setupWebGL, pointsToBuffer, parseColor} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer, parseColor } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 
-const hintEl = document.getElementById('hint');
+const hintEl = document.getElementById("hint");
 
 const maxNumVerticles = 4000;
 
-const colorPicker = document.getElementById('colorPicker');
-let color = parseColor(colorPicker.value, 'uv3');
+const colorPicker = document.getElementById("colorPicker");
+let color = parseColor(colorPicker.value, "uv3");
 let pointsTemp = null;
 let colorTemp = null;
 let pointsCount = 0;
 
 function makeRect(vBuffer, cBuffer, ox, oy, w, h) {
-  const x = -1 + 2 * ox / w;
-  const y = -1 + 2 * (h - oy) / h;
+  const x = -1 + (2 * ox) / w;
+  const y = -1 + (2 * (h - oy)) / h;
 
-  if(pointsTemp) {
+  if (pointsTemp) {
     const p1 = vec2(pointsTemp[0], y);
     const p2 = vec2(x, y);
     const p3 = vec2(x, pointsTemp[1]);
@@ -29,7 +29,11 @@ function makeRect(vBuffer, cBuffer, ox, oy, w, h) {
     gl.bufferSubData(gl.ARRAY_BUFFER, 8 * pointsCount, pointsToBuffer([p1, p2, p3]));
 
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-    gl.bufferSubData(gl.ARRAY_BUFFER, 3 * pointsCount, pointsToBuffer([colorTemp, color, color], Uint8Array));
+    gl.bufferSubData(
+      gl.ARRAY_BUFFER,
+      3 * pointsCount,
+      pointsToBuffer([colorTemp, color, color], Uint8Array),
+    );
     pointsTemp = null;
     colorTemp = null;
     pointsCount += 3;
@@ -48,13 +52,13 @@ function makeRect(vBuffer, cBuffer, ox, oy, w, h) {
 }
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
-  const {width, height} = canvas;
+  const canvas = document.getElementById("gl-canvas");
+  const { width, height } = canvas;
 
   gl = setupWebGL(canvas);
 
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
   //
@@ -74,7 +78,7 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, 8 * maxNumVerticles, gl.STATIC_DRAW);
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
@@ -82,22 +86,22 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, 3 * maxNumVerticles, gl.STATIC_DRAW);
 
-  const vColor = gl.getAttribLocation(program, 'vColor');
+  const vColor = gl.getAttribLocation(program, "vColor");
   gl.vertexAttribPointer(vColor, 3, gl.UNSIGNED_BYTE, true, 0, 0);
   gl.enableVertexAttribArray(vColor);
 
-  colorPicker.addEventListener('change', () => {
-    color = parseColor(colorPicker.value, 'uv3');
+  colorPicker.addEventListener("change", () => {
+    color = parseColor(colorPicker.value, "uv3");
   });
 
-  canvas.addEventListener('mousedown', (event) => {
-    const {offsetX: x, offsetY: y} = event;
-    if(!pointsTemp) {
-      hintEl.className = 'show';
+  canvas.addEventListener("mousedown", (event) => {
+    const { offsetX: x, offsetY: y } = event;
+    if (!pointsTemp) {
+      hintEl.className = "show";
       hintEl.style.top = `${event.clientY}px`;
       hintEl.style.left = `${event.clientX}px`;
     } else {
-      hintEl.className = '';
+      hintEl.className = "";
     }
     makeRect(vBuffer, cBuffer, x, y, width, height);
   });
@@ -107,7 +111,7 @@ function init() {
 
 function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
-  for(let i = 0; i < pointsCount; i += 4) {
+  for (let i = 0; i < pointsCount; i += 4) {
     gl.drawArrays(gl.TRIANGLE_FAN, i, 4);
   }
   // gl.drawArrays(gl.POINTS, 0, pointsCount);

@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import {vec3} from 'gl-matrix';
+import * as THREE from "three";
+import { vec3 } from "gl-matrix";
 
 const points = [];
 const colors = [];
@@ -33,7 +33,7 @@ function tetra(a, b, c, d) {
 }
 
 function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
-  if(count <= 0) {
+  if (count <= 0) {
     tetra(a, b, c, d);
   } else {
     const ab = vec3.lerp(a, b, perturb(0.5));
@@ -59,7 +59,7 @@ function init() {
   camera.position.y = 0;
   camera.position.z = 3;
   camera.lookAt(new THREE.Vector3(0, 0, -1));
-  const renderer = new THREE.WebGLRenderer({antialias: true});
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setClearColor(new THREE.Color(0xffffff));
   renderer.setSize(512, 512);
   const vertices = [
@@ -74,11 +74,8 @@ function init() {
 
   const geometry = new THREE.BufferGeometry();
   geometry.setIndex(indices);
-  geometry.addAttribute(
-    'position',
-    new THREE.Float32BufferAttribute(points, 3)
-  );
-  geometry.addAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  geometry.addAttribute("position", new THREE.Float32BufferAttribute(points, 3));
+  geometry.addAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
 
   const material = new THREE.MeshBasicMaterial({
     vertexColors: THREE.VertexColors,
@@ -89,7 +86,7 @@ function init() {
 
   scene.add(mesh);
 
-  document.getElementById('gl-canvas').appendChild(renderer.domElement);
+  document.getElementById("gl-canvas").appendChild(renderer.domElement);
 
   renderer.render(scene, camera);
 }

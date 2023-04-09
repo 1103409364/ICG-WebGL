@@ -31,7 +31,8 @@
     "build": "rm -rf docs && node ./scripts/build.js && echo 'webgl.group' > docs/CNAME",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src",
-    "lint-fix": "eslint --ext .js,.html src --fix"
+    "lint-fix": "eslint --ext .js,.html src --fix",
+    "format": "prettier --write \"src/**/*.js\" \"src/**/*.html\""
   },
   "keywords": [],
   "author": "akira-cn",

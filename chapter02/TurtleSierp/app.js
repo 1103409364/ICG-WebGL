@@ -1,8 +1,8 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 class Turtle {
   /**
@@ -15,7 +15,7 @@ class Turtle {
     this.theta = theta;
     this.x = x;
     this.y = y;
-    this._penStatus = 'down';
+    this._penStatus = "down";
     this._points = [[vec2(x, y)]];
     this._initGl();
     this._timer = null;
@@ -29,7 +29,7 @@ class Turtle {
     // 根据移动的距离计算画笔坐标并保存位置进行绘制
     this.x += distance * Math.cos((Math.PI * this.theta) / 180.0);
     this.y += distance * Math.sin((Math.PI * this.theta) / 180.0);
-    if(this._penStatus === 'down') {
+    if (this._penStatus === "down") {
       const points = this._points;
       points[points.length - 1].push(vec2(this.x, this.y));
       // 防抖
@@ -62,9 +62,9 @@ class Turtle {
    */
   pen(action) {
     this._penStatus = action;
-    if(action === 'up' && this._points[this._points.length - 1].length !== 0) {
+    if (action === "up" && this._points[this._points.length - 1].length !== 0) {
       this._points.push([]);
-    } else if(action === 'down') {
+    } else if (action === "down") {
       const segment = this._points[this._points.length - 1];
       segment[0] = vec2(this.x, this.y);
     }
@@ -74,10 +74,10 @@ class Turtle {
    * 内部私有方法，初始化webGl
    */
   _initGl() {
-    const canvas = document.getElementById('gl-canvas');
+    const canvas = document.getElementById("gl-canvas");
     const gl = setupWebGL(canvas);
 
-    if(!gl) {
+    if (!gl) {
       console.error("WebGL isn't available");
     }
     gl.viewport(0, 0, canvas.width, canvas.height);
@@ -95,9 +95,9 @@ class Turtle {
   _render() {
     const gl = this._gl;
     gl.clear(gl.COLOR_BUFFER_BIT);
-    const vPosition = gl.getAttribLocation(this._program, 'vPosition');
+    const vPosition = gl.getAttribLocation(this._program, "vPosition");
     // 循环所有路径进行绘制
-    for(let i = 0; i < this._points.length; i++) {
+    for (let i = 0; i < this._points.length; i++) {
       const bufferId = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
       gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(this._points[i]), gl.STATIC_DRAW);
@@ -112,8 +112,8 @@ const numTimesToSubdivide = 5;
 const MAX_LENGTH = 2;
 
 function divideTriangle(t, length = MAX_LENGTH, count = numTimesToSubdivide) {
-  if(count <= 0) {
-    for(let i = 0; i < 3; i++) {
+  if (count <= 0) {
+    for (let i = 0; i < 3; i++) {
       t.forward(length);
       t.left(120);
     }

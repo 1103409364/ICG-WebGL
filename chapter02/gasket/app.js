@@ -1,8 +1,8 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 let points;
@@ -10,11 +10,11 @@ let points;
 const NumPoints = 5000;
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
+  const canvas = document.getElementById("gl-canvas");
   gl = setupWebGL(canvas);
 
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
   //
@@ -23,11 +23,7 @@ function init() {
 
   // First, initialize the corners of our gasket with three points.
 
-  const vertices = [
-    vec2(-1, -1),
-    vec2(0, 1),
-    vec2(1, -1),
-  ];
+  const vertices = [vec2(-1, -1), vec2(0, 1), vec2(1, -1)];
 
   // Specify a starting point p for our iterations
   // p must lie inside any set of three vertices
@@ -44,7 +40,7 @@ function init() {
   // Each new point is located midway between
   // last point and a randomly chosen vertex
 
-  for(let i = 0; points.length < NumPoints; ++i) {
+  for (let i = 0; points.length < NumPoints; ++i) {
     const j = Math.floor(Math.random() * 3);
     p = (vec2(points[i]) + vec2(vertices[j])) * 0.5;
     points.push(p);
@@ -68,7 +64,7 @@ function init() {
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 

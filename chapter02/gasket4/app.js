@@ -1,8 +1,8 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec3} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec3 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 
@@ -31,7 +31,7 @@ function tetra(a, b, c, d) {
 }
 
 function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
-  if(count <= 0) {
+  if (count <= 0) {
     tetra(a, b, c, d);
   } else {
     const ab = vec3.lerp(a, b, 0.5);
@@ -51,11 +51,11 @@ function divideTetra(a, b, c, d, count = numTimesToSubdivide) {
 }
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
+  const canvas = document.getElementById("gl-canvas");
   gl = setupWebGL(canvas);
 
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
   //
@@ -65,8 +65,8 @@ function init() {
   // First, initialize the corners of our gasket with three points.
 
   const vertices = [
-    vec3(0.0000, 0.0000, -1.0000),
-    vec3(0.0000, 0.9428, 0.3333),
+    vec3(0.0, 0.0, -1.0),
+    vec3(0.0, 0.9428, 0.3333),
     vec3(-0.8165, -0.4714, 0.3333),
     vec3(0.8165, -0.4714, 0.3333),
   ];
@@ -94,7 +94,7 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(colors), gl.STATIC_DRAW);
 
-  const vColor = gl.getAttribLocation(program, 'vColor');
+  const vColor = gl.getAttribLocation(program, "vColor");
   gl.vertexAttribPointer(vColor, 3, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vColor);
 
@@ -103,7 +103,7 @@ function init() {
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 

@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 // once everything is loaded, we run our Three.js stuff.
 function init() {
@@ -11,7 +11,7 @@ function init() {
   // create a render and set the size
   const renderer = new THREE.WebGLRenderer();
   // renderer.setClearColorHex();
-  renderer.setClearColor(new THREE.Color(0xEEEEEE));
+  renderer.setClearColor(new THREE.Color(0xeeeeee));
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // show axes in the screen
@@ -20,7 +20,7 @@ function init() {
 
   // create the ground plane
   const planeGeometry = new THREE.PlaneGeometry(60, 20);
-  const planeMaterial = new THREE.MeshBasicMaterial({color: 0xcccccc});
+  const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
   const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
   // rotate and position the plane
@@ -34,7 +34,7 @@ function init() {
 
   // create a cube
   const cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
-  const cubeMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: true});
+  const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true });
   const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 
   // position the cube
@@ -47,7 +47,7 @@ function init() {
 
   // create a sphere
   const sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
-  const sphereMaterial = new THREE.MeshBasicMaterial({color: 0x7777ff, wireframe: true});
+  const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x7777ff, wireframe: true });
   const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
   // position the sphere
@@ -65,7 +65,7 @@ function init() {
   camera.lookAt(scene.position);
 
   // add the output of the renderer to the html element
-  document.getElementById('WebGL-output').appendChild(renderer.domElement);
+  document.getElementById("WebGL-output").appendChild(renderer.domElement);
 
   // render the scene
   renderer.render(scene, camera);

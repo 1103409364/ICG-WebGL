@@ -1,13 +1,13 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 class DrawPixel {
   constructor() {
     this._points = [];
-    this._drawType = '';
+    this._drawType = "";
     this._initGl();
   }
 
@@ -18,9 +18,9 @@ class DrawPixel {
   writePixel(points) {
     // 清空坐标
     this._points = [];
-    if(!Array.isArray(points)) return;
+    if (!Array.isArray(points)) return;
     points.forEach((item) => {
-      if(Array.isArray(item) && item.length === 2) {
+      if (Array.isArray(item) && item.length === 2) {
         this._points.push(vec2(item[0], item[1]));
       }
     });
@@ -30,7 +30,7 @@ class DrawPixel {
    *
    * @param {String} type 绘制类型
    */
-  readPixel(type = 'LINE_STRIP') {
+  readPixel(type = "LINE_STRIP") {
     this._drawType = type;
     this._render();
   }
@@ -45,22 +45,22 @@ class DrawPixel {
     // 清空坐标
     this._points = [];
     // 获取各个分段位置的坐标
-    for(let i = 0; i < segment; i++) {
-      const x = center[0] + radius * Math.cos(Math.PI * 2 / segment * i);
-      const y = center[1] + radius * Math.sin(Math.PI * 2 / segment * i);
+    for (let i = 0; i < segment; i++) {
+      const x = center[0] + radius * Math.cos(((Math.PI * 2) / segment) * i);
+      const y = center[1] + radius * Math.sin(((Math.PI * 2) / segment) * i);
       this._points.push(vec2(x, y));
     }
-    this.readPixel('LINE_LOOP');
+    this.readPixel("LINE_LOOP");
   }
 
   /**
    * 内部私有方法，初始化webGl
    */
   _initGl() {
-    const canvas = document.getElementById('gl-canvas');
+    const canvas = document.getElementById("gl-canvas");
     const gl = setupWebGL(canvas);
 
-    if(!gl) {
+    if (!gl) {
       console.error("WebGL isn't available");
     }
     gl.viewport(0, 0, canvas.width, canvas.height);
@@ -81,7 +81,7 @@ class DrawPixel {
     gl.bindBuffer(gl.ARRAY_BUFFER, bufferId);
     gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(this._points), gl.STATIC_DRAW);
 
-    const vPosition = gl.getAttribLocation(this._program, 'vPosition');
+    const vPosition = gl.getAttribLocation(this._program, "vPosition");
     gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(vPosition);
 
@@ -91,12 +91,22 @@ class DrawPixel {
   }
 }
 
-
 const drawPixel = new DrawPixel();
-drawPixel.writePixel([[-0.3, 0.8], [-0.7, 0.8], [-0.7, 0.3], [-0.3, 0.3], [-0.3, 0.5], [-0.5, 0.5]]);
-drawPixel.readPixel('LINE_STRIP');
-drawPixel.writePixel([[-0.1, 0.8], [-0.1, 0.3], [0.3, 0.3]]);
-drawPixel.readPixel('LINE_STRIP');
+drawPixel.writePixel([
+  [-0.3, 0.8],
+  [-0.7, 0.8],
+  [-0.7, 0.3],
+  [-0.3, 0.3],
+  [-0.3, 0.5],
+  [-0.5, 0.5],
+]);
+drawPixel.readPixel("LINE_STRIP");
+drawPixel.writePixel([
+  [-0.1, 0.8],
+  [-0.1, 0.3],
+  [0.3, 0.3],
+]);
+drawPixel.readPixel("LINE_STRIP");
 drawPixel.drawCircle([0.0, -0.4], 0.5, 40);
 drawPixel.drawCircle([0.0, -0.4], 0.4, 10);
 drawPixel.drawCircle([0.0, -0.4], 0.3, 5);

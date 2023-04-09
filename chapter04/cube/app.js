@@ -1,9 +1,9 @@
-import {createProgram, setupWebGL, pointsToBuffer} from 'GLHelper';
-import {vec4} from 'gl-matrix';
-import colorString from 'color-string';
+import { createProgram, setupWebGL, pointsToBuffer } from "GLHelper";
+import { vec4 } from "gl-matrix";
+import colorString from "color-string";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
 let gl;
 
@@ -35,18 +35,11 @@ const vertices = [
   vec4(0.5, -0.5, -0.5, 1.0),
 ];
 
-const vertexColors = [
-  'black',
-  'red',
-  'yellow',
-  'green',
-  'blue',
-  'magenta',
-  'cyan',
-  'white',
-].map((color) => {
-  return colorString.get(color).value.slice(0, 3);
-});
+const vertexColors = ["black", "red", "yellow", "green", "blue", "magenta", "cyan", "white"].map(
+  (color) => {
+    return colorString.get(color).value.slice(0, 3);
+  },
+);
 
 // console.log(vertexColors);
 
@@ -58,7 +51,7 @@ function quad(a, b, c, d) {
   // vertex color assigned by the index of the vertex
   const indices = [a, b, c, a, c, d];
 
-  for(let i = 0; i < indices.length; ++i) {
+  for (let i = 0; i < indices.length; ++i) {
     points.push(vertices[indices[i]]);
     // colors.push( vertexColors[indices[i]] );
 
@@ -68,10 +61,10 @@ function quad(a, b, c, d) {
 }
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
+  const canvas = document.getElementById("gl-canvas");
   gl = setupWebGL(canvas);
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
   colorCube();
@@ -88,7 +81,7 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(colors, Uint8Array), gl.STATIC_DRAW);
 
-  const vColor = gl.getAttribLocation(program, 'vColor');
+  const vColor = gl.getAttribLocation(program, "vColor");
   gl.vertexAttribPointer(vColor, 3, gl.UNSIGNED_BYTE, true, 0, 0);
   gl.enableVertexAttribArray(vColor);
 
@@ -96,16 +89,15 @@ function init() {
   gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
 
-
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
-  thetaLoc = gl.getUniformLocation(program, 'theta');
+  thetaLoc = gl.getUniformLocation(program, "theta");
 
   /* globals xButton:true yButton:true zButton:true */
   [xButton, yButton, zButton].forEach((button, i) => {
-    button.addEventListener('click', () => {
+    button.addEventListener("click", () => {
       axis = i;
     });
   });

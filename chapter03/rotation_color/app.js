@@ -1,27 +1,20 @@
-import {createProgram, setupWebGL, pointsToBuffer, parseColor} from 'GLHelper';
-import {vec2} from 'gl-matrix';
+import { createProgram, setupWebGL, pointsToBuffer, parseColor } from "GLHelper";
+import { vec2 } from "gl-matrix";
 
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
-let gl,
-  thetaLoc,
-  colorLoc;
+let gl, thetaLoc, colorLoc;
 
 function init() {
-  const canvas = document.getElementById('gl-canvas');
+  const canvas = document.getElementById("gl-canvas");
   gl = setupWebGL(canvas);
 
-  if(!gl) {
-    console.error('WebGL isn\'t available');
+  if (!gl) {
+    console.error("WebGL isn't available");
   }
 
-  const vertices = [
-    vec2(0.0, 0.5),
-    vec2(0.5, 0.0),
-    vec2(-0.5, 0.0),
-    vec2(0.0, -0.5),
-  ];
+  const vertices = [vec2(0.0, 0.5), vec2(0.5, 0.0), vec2(-0.5, 0.0), vec2(0.0, -0.5)];
 
   //
   //  Configure WebGL
@@ -41,17 +34,17 @@ function init() {
   gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(vertices), gl.STATIC_DRAW);
   // Associate out shader variables with our data buffer
 
-  const vPosition = gl.getAttribLocation(program, 'vPosition');
+  const vPosition = gl.getAttribLocation(program, "vPosition");
   gl.vertexAttribPointer(vPosition, 2, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
-  thetaLoc = gl.getUniformLocation(program, 'theta');
-  colorLoc = gl.getUniformLocation(program, 'color');
+  thetaLoc = gl.getUniformLocation(program, "theta");
+  colorLoc = gl.getUniformLocation(program, "color");
 
   render();
 }
 
-const colorPicker = document.getElementById('colorPicker');
+const colorPicker = document.getElementById("colorPicker");
 
 let theta = 0.0;
 let color = parseColor(colorPicker.value);
@@ -65,7 +58,7 @@ function render() {
   requestAnimationFrame(render);
 }
 
-colorPicker.addEventListener('change', () => {
+colorPicker.addEventListener("change", () => {
   color = parseColor(colorPicker.value);
 });
 
