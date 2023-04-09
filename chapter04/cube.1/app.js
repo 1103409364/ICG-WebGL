@@ -1,9 +1,9 @@
-import {vec4, mat4} from 'gl-matrix';
-import {createProgram, setupWebGL, pointsToBuffer} from '../../src/index';
-import vertexShader from './shader.vert';
-import fragmentShader from './shader.frag';
+import { vec4, mat4 } from "gl-matrix";
+import { createProgram, setupWebGL, pointsToBuffer } from "../../src/index";
+import vertexShader from "./shader.vert";
+import fragmentShader from "./shader.frag";
 
-const canvas = document.getElementById('gl-canvas');
+const canvas = document.getElementById("gl-canvas");
 const gl = setupWebGL(canvas);
 
 gl.viewport(0, 0, canvas.width, canvas.height);
@@ -65,7 +65,7 @@ function colorCube() {
 
 function quad(a, b, c, d) {
   const indices = [a, b, c, a, c, d];
-  for(let i = 0; i < indices.length; ++i) {
+  for (let i = 0; i < indices.length; ++i) {
     points.push(vertices[indices[i]]);
     colors.push(vertexColors[a]);
   }
@@ -77,24 +77,23 @@ const cBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(colors), gl.STATIC_DRAW);
 
-const vColor = gl.getAttribLocation(program, 'vColor');
+const vColor = gl.getAttribLocation(program, "vColor");
 gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
 gl.enableVertexAttribArray(vColor);
-
 
 const vBuffer = gl.createBuffer();
 gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
 gl.bufferData(gl.ARRAY_BUFFER, pointsToBuffer(points), gl.STATIC_DRAW);
 
-const vPosition = gl.getAttribLocation(program, 'vPosition');
+const vPosition = gl.getAttribLocation(program, "vPosition");
 gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
 gl.enableVertexAttribArray(vPosition);
 
+const modelViewMatrix = gl.getUniformLocation(program, "modelViewMatrix");
 
-const modelViewMatrix = gl.getUniformLocation(program, 'modelViewMatrix');
-
+// eslint-disable-next-line no-undef
 [xButton, yButton, zButton].forEach((button, i) => {
-  button.addEventListener('click', () => {
+  button.addEventListener("click", () => {
     axis = i;
   });
 });
