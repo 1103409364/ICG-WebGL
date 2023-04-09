@@ -103,7 +103,7 @@ module.exports = function (env = {}) {
       ],
       compress: true,
       port: 3000,
-      hot: true,
+      // hot: true, "hot: true" automatically applies HMR plugin, you don't have to add it manually to your webpack configuration.
       // ...
     },
 
