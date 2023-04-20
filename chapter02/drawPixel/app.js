@@ -21,7 +21,7 @@ class DrawPixel {
     if (!Array.isArray(points)) return;
     points.forEach((item) => {
       if (Array.isArray(item) && item.length === 2) {
-        this._points.push(vec2(item[0], item[1]));
+        this._points.push(vec2.fromValues(item[0], item[1]));
       }
     });
   }
@@ -48,7 +48,7 @@ class DrawPixel {
     for (let i = 0; i < segment; i++) {
       const x = center[0] + radius * Math.cos(((Math.PI * 2) / segment) * i);
       const y = center[1] + radius * Math.sin(((Math.PI * 2) / segment) * i);
-      this._points.push(vec2(x, y));
+      this._points.push(vec2.fromValues(x, y));
     }
     this.readPixel("LINE_LOOP");
   }

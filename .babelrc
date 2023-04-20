@@ -10,7 +10,7 @@
     ]
   ],
   "plugins": [
-    "transform-gl-matrix",
+    // "transform-gl-matrix",
     "@babel/plugin-proposal-class-properties",
     [
       "@babel/plugin-transform-runtime",
