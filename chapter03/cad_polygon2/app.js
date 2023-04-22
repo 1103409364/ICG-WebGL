@@ -42,8 +42,8 @@ function getDirection(points) {
   const p2 = points[minIdx];
   const p3 = points[(minIdx + 1) % len];
 
-  const v1 = vec2(p1) - vec2(p2);
-  const v2 = vec2(p3) - vec2(p2);
+  const v1 = vec2.fromValues(p1) - vec2.fromValues(p2);
+  const v2 = vec2.fromValues(p3) - vec2.fromValues(p2);
 
   const d = vec2.cross(v1, v2)[2];
 
@@ -60,8 +60,8 @@ function getAngle(points, idx, direction) {
   const p2 = points[idx];
   const p3 = points[(idx + 1) % len];
 
-  const v1 = vec2(p1) - vec2(p2);
-  const v2 = vec2(p3) - vec2(p2);
+  const v1 = vec2.fromValues(p1) - vec2.fromValues(p2);
+  const v2 = vec2.fromValues(p3) - vec2.fromValues(p2);
 
   const angle = vec2.angle(v1, v2);
   const d = vec2.cross(v1, v2)[2];
@@ -71,9 +71,9 @@ function getAngle(points, idx, direction) {
 }
 
 function isCross(p1, p2, p3, p4) {
-  const v1 = vec2(p4) - vec2(p3);
-  const v2 = vec2(p1) - vec2(p3);
-  const v3 = vec2(p2) - vec2(p3);
+  const v1 = vec2.fromValues(p4) - vec2.fromValues(p3);
+  const v2 = vec2.fromValues(p1) - vec2.fromValues(p3);
+  const v3 = vec2.fromValues(p2) - vec2.fromValues(p3);
 
   const z1 = vec2.cross(v1, v2)[2];
   const z2 = vec2.cross(v1, v3)[2];
@@ -156,7 +156,7 @@ function addVertex(vBuffer, cBuffer, ox, oy, w, h) {
   const y = -1 + (2 * (h - oy)) / h;
 
   const polygon = polygons[polygons.length - 1];
-  const vertex = vec2(x, y);
+  const vertex = vec2.fromValues(x, y);
 
   const idx = polygon.index + polygon.vertexes;
 

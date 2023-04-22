@@ -14,7 +14,12 @@ function init() {
     console.error("WebGL isn't available");
   }
 
-  const vertices = [vec2(0.0, 0.5), vec2(0.5, 0.0), vec2(-0.5, 0.0), vec2(0.0, -0.5)];
+  const vertices = [
+    vec2.fromValues(0.0, 0.5),
+    vec2.fromValues(0.5, 0.0),
+    vec2.fromValues(-0.5, 0.0),
+    vec2.fromValues(0.0, -0.5),
+  ];
 
   //
   //  Configure WebGL

@@ -23,10 +23,13 @@ let lastPos = [0, 0, 0];
 let startX, startY;
 
 function multq(a, b) {
-  const s = vec3(a[1], a[2], a[3]);
-  const t = vec3(b[1], b[2], b[3]);
+  const s = vec3.fromValues(a[1], a[2], a[3]);
+  const t = vec3.fromValues(b[1], b[2], b[3]);
 
-  return vec4(a[0] * b[0] - vec3.dot(s, t), vec3(t) * vec3(s) + vec3(t) * a[0] + vec3(s) * b[0]);
+  return vec4.fromValues(
+    a[0] * b[0] - vec3.dot(s, t),
+    vec3.fromValues(t) * vec3.fromValues(s) + vec3.fromValues(t) * a[0] + vec3.fromValues(s) * b[0],
+  );
 }
 
 function trackballView(x, y) {
@@ -100,14 +103,14 @@ function colorCube() {
 }
 
 const vertices = [
-  vec4(-0.5, -0.5, 0.5, 1.0),
-  vec4(-0.5, 0.5, 0.5, 1.0),
-  vec4(0.5, 0.5, 0.5, 1.0),
-  vec4(0.5, -0.5, 0.5, 1.0),
-  vec4(-0.5, -0.5, -0.5, 1.0),
-  vec4(-0.5, 0.5, -0.5, 1.0),
-  vec4(0.5, 0.5, -0.5, 1.0),
-  vec4(0.5, -0.5, -0.5, 1.0),
+  vec4.fromValues(-0.5, -0.5, 0.5, 1.0),
+  vec4.fromValues(-0.5, 0.5, 0.5, 1.0),
+  vec4.fromValues(0.5, 0.5, 0.5, 1.0),
+  vec4.fromValues(0.5, -0.5, 0.5, 1.0),
+  vec4.fromValues(-0.5, -0.5, -0.5, 1.0),
+  vec4.fromValues(-0.5, 0.5, -0.5, 1.0),
+  vec4.fromValues(0.5, 0.5, -0.5, 1.0),
+  vec4.fromValues(0.5, -0.5, -0.5, 1.0),
 ];
 
 const vertexColors = ["black", "red", "yellow", "green", "blue", "magenta", "cyan", "white"].map(
@@ -173,7 +176,7 @@ function init() {
   gl.vertexAttribPointer(vPosition, 4, gl.FLOAT, false, 0, 0);
   gl.enableVertexAttribArray(vPosition);
 
-  rotationQuaternion = vec4(1, 0, 0, 0);
+  rotationQuaternion = vec4.fromValues(1, 0, 0, 0);
   rotationQuaternionLoc = gl.getUniformLocation(program, "r");
   gl.uniform4fv(rotationQuaternionLoc, rotationQuaternion);
 
@@ -206,7 +209,7 @@ function render() {
     const c = Math.cos(angle / 2.0);
     const s = Math.sin(angle / 2.0);
 
-    const rotation = vec4(c, vec3(axis) * s);
+    const rotation = vec4.fromValues(c, vec3.fromValues(axis) * s);
     rotationQuaternion = multq(rotationQuaternion, rotation);
     // console.log(rotationQuaternion);
     gl.uniform4fv(rotationQuaternionLoc, rotationQuaternion);

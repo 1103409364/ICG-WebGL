@@ -33,14 +33,14 @@ const colors = [];
 // 顺序为前后左右上下
 
 const vertices = [
-  vec4(-0.5, 0.5, -0.5, 1),
-  vec4(-0.5, 0.5, 0.5, 1),
-  vec4(0.5, 0.5, 0.5, 1),
-  vec4(0.5, 0.5, -0.5, 1),
-  vec4(-0.5, -0.5, -0.5, 1),
-  vec4(-0.5, -0.5, 0.5, 1),
-  vec4(0.5, -0.5, 0.5, 1),
-  vec4(0.5, -0.5, -0.5, 1),
+  vec4.fromValues(-0.5, 0.5, -0.5, 1),
+  vec4.fromValues(-0.5, 0.5, 0.5, 1),
+  vec4.fromValues(0.5, 0.5, 0.5, 1),
+  vec4.fromValues(0.5, 0.5, -0.5, 1),
+  vec4.fromValues(-0.5, -0.5, -0.5, 1),
+  vec4.fromValues(-0.5, -0.5, 0.5, 1),
+  vec4.fromValues(0.5, -0.5, 0.5, 1),
+  vec4.fromValues(0.5, -0.5, -0.5, 1),
 ];
 
 const vertexColors = [

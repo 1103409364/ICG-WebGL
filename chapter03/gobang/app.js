@@ -13,7 +13,7 @@ const boardVertexNumber = (boardSegment + 1) * 4;
 // 棋盘顶点坐标
 const boardVertex = [];
 // 棋盘顶点颜色
-const boardColors = new Array(boardVertexNumber).fill(vec4(0.0, 0.0, 0.0, 1.0));
+const boardColors = new Array(boardVertexNumber).fill(vec4.fromValues(0.0, 0.0, 0.0, 1.0));
 // 棋子分段数,越大越接近圆
 const chessSegment = 20;
 // 棋子半径
@@ -96,11 +96,14 @@ function initBoard() {
   const columnWidth = 2 / boardSegment;
   for (let i = 0; i < rowLineNumber + columnLineNumber; i++) {
     if (i < rowLineNumber) {
-      boardVertex.push(vec2(-1.0, -1 + i * rowHeight), vec2(1.0, -1 + i * rowHeight));
+      boardVertex.push(
+        vec2.fromValues(-1.0, -1 + i * rowHeight),
+        vec2.fromValues(1.0, -1 + i * rowHeight),
+      );
     } else {
       boardVertex.push(
-        vec2(-1 + (i % rowLineNumber) * columnWidth, -1),
-        vec2(-1 + (i % rowLineNumber) * columnWidth, 1),
+        vec2.fromValues(-1 + (i % rowLineNumber) * columnWidth, -1),
+        vec2.fromValues(-1 + (i % rowLineNumber) * columnWidth, 1),
       );
     }
   }
@@ -123,7 +126,7 @@ function addChess(vBuffer, cBuffer, x, y, width, height) {
   gl.bufferSubData(gl.ARRAY_BUFFER, (boardVertexNumber + index) * 8, pointsToBuffer(chessVertex));
   // 颜色
   gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-  const color = colorFlag ? vec4(0.0, 0.0, 0.0, 1.0) : vec4(1.0, 1.0, 1.0, 1.0);
+  const color = colorFlag ? vec4.fromValues(0.0, 0.0, 0.0, 1.0) : vec4.fromValues(1.0, 1.0, 1.0, 1.0);
   gl.bufferSubData(
     gl.ARRAY_BUFFER,
     16 * (boardVertexNumber + index),
@@ -175,7 +178,7 @@ function vertexChess(x, y) {
   for (let i = 0; i < chessSegment; i++) {
     const xChess = x + chessRadius * Math.cos(((Math.PI * 2) / chessSegment) * i);
     const yChess = y + chessRadius * Math.sin(((Math.PI * 2) / chessSegment) * i);
-    chessVertex.push(vec2(xChess, yChess));
+    chessVertex.push(vec2.fromValues(xChess, yChess));
   }
   return chessVertex;
 }
@@ -235,9 +238,9 @@ function checkFinished(x, y, flag) {
     winHandle(chessType);
   } else if (check(x, y, chessType, "col") >= 5) {
     winHandle(chessType);
-  } else if (check(x, y, chessType, "diagonal_left") >= 5) {
+  } else if (check(x, y, chessType, "diagonalLeft") >= 5) {
     winHandle(chessType);
-  } else if (check(x, y, chessType, "diagonal_right") >= 5) {
+  } else if (check(x, y, chessType, "diagonalRight") >= 5) {
     winHandle(chessType);
   }
 }
@@ -252,7 +255,7 @@ function winHandle(flag) {
  * @param {Number} x 落下棋子在棋盘状态中的x坐标
  * @param {Number} y 落下棋子在棋盘状态中的x坐标
  * @param {Number} chessType 棋子类别 1或2
- * @param {String} checkType 检查类型 row,col,diagonal_left(左上-右下),diagonal_left(右上-左下)
+ * @param {String} checkType 检查类型 row,col,diagonalLeft(左上-右下),diagonalLeft(右上-左下)
  */
 function check(x, y, chessType, checkType) {
   let connected = 1;
@@ -298,8 +301,8 @@ function check(x, y, chessType, checkType) {
     const { decrease, increase } = nextChessMap[checkType];
     if (decrease) {
       connected += 1;
-      // 除了diagonal_right 其他类型decreaseDirection和increaseDirection增减一致
-      if (checkType !== "diagonal_right") {
+      // 除了diagonalRight 其他类型decreaseDirection和increaseDirection增减一致
+      if (checkType !== "diagonalRight") {
         decreaseDirection++;
       } else {
         decreaseDirection++;
@@ -307,7 +310,7 @@ function check(x, y, chessType, checkType) {
       }
     } else if (increase) {
       connected += 1;
-      if (checkType !== "diagonal_right") {
+      if (checkType !== "diagonalRight") {
         increaseDirection++;
       } else {
         decreaseDirection++;

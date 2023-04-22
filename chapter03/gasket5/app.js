@@ -24,14 +24,14 @@ function init() {
 
   // First, initialize the corners of our gasket with three points.
 
-  const vertices = [vec2(-1, -1), vec2(0, 1), vec2(1, -1)];
+  const vertices = [vec2.fromValues(-1, -1), vec2.fromValues(0, 1), vec2.fromValues(1, -1)];
 
   // Specify a starting point p for our iterations
   // p must lie inside any set of three vertices
 
-  const u = vec2(vertices[0]) + vec2(vertices[1]);
-  const v = vec2(vertices[0]) + vec2(vertices[2]);
-  let p = (vec2(u) + vec2(v)) * 0.25;
+  const u = vec2.fromValues(vertices[0]) + vec2.fromValues(vertices[1]);
+  const v = vec2.fromValues(vertices[0]) + vec2.fromValues(vertices[2]);
+  let p = (vec2.fromValues(u) + vec2.fromValues(v)) * 0.25;
 
   // And, add our initial point into our array of points
 
@@ -43,7 +43,7 @@ function init() {
 
   for (let i = 0; points.length < NumPoints; ++i) {
     const j = Math.floor(Math.random() * 3);
-    p = (vec2(points[i]) + vec2(vertices[j])) * 0.5;
+    p = (vec2.fromValues(points[i]) + vec2.fromValues(vertices[j])) * 0.5;
     points.push(p);
   }
 

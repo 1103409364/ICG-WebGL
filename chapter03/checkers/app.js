@@ -259,9 +259,9 @@ let canvas,
   gl.uniform1i(uPickedNumber, -1);
 
   uMvpMatrix = gl.getUniformLocation(program, "u_MvpMatrix");
-  const eye = vec3(0, 0, 3),
-    center = vec3(0, 0, 0),
-    up = vec3(0, 1, 0);
+  const eye = vec3.fromValues(0, 0, 3),
+    center = vec3.fromValues(0, 0, 0),
+    up = vec3.fromValues(0, 1, 0);
 
   viewMatrix = mat4.create();
   projMatrix = mat4.create();
@@ -272,7 +272,7 @@ let canvas,
   mat4.rotateX(modelMatrix, modelMatrix, (Math.PI * 2 * 320) / 360);
   mat4.lookAt(viewMatrix, eye, center, up);
   // 建模坐标在0-1之间,移至中心点，便于旋转计算
-  mat4.translate(modelMatrix, modelMatrix, vec3(-0.5, -0.5, 0.0));
+  mat4.translate(modelMatrix, modelMatrix, vec3.fromValues(-0.5, -0.5, 0.0));
   mat4.perspective(projMatrix, (Math.PI * 30) / 180, 1, 1, 100);
   mvpMatrix = mat4(projMatrix) * mat4(viewMatrix) * mat4(modelMatrix);
   gl.uniformMatrix4fv(uMvpMatrix, false, mvpMatrix);
@@ -456,15 +456,15 @@ function setMVPMatrix(val, type) {
       mat4.rotateY(modelMatrix, modelMatrix, val);
       break;
     case "xTranslate":
-      mat4.translate(modelMatrix, modelMatrix, vec3(val, 0.0, 0.0));
+      mat4.translate(modelMatrix, modelMatrix, vec3.fromValues(val, 0.0, 0.0));
       break;
     case "zTranslate":
-      mat4.translate(modelMatrix, modelMatrix, vec3(0.0, 0.0, val));
+      mat4.translate(modelMatrix, modelMatrix, vec3.fromValues(0.0, 0.0, val));
       break;
     default:
       break;
   }
-  mat4.translate(modelMatrix, modelMatrix, vec3(-0.5, -0.5, 0.0));
+  mat4.translate(modelMatrix, modelMatrix, vec3.fromValues(-0.5, -0.5, 0.0));
   mvpMatrix = mat4(projMatrix) * mat4(viewMatrix) * mat4(modelMatrix);
   gl.uniformMatrix4fv(uMvpMatrix, false, mvpMatrix);
 }
