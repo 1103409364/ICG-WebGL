@@ -55,6 +55,7 @@ module.exports = function (env = {}) {
   }
 
   return {
+    devtool: env.production ? false : "source-map",
     mode: env.production ? "production" : "none",
     entry,
     output,

@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ICG start",
+      "type": "npm", // 任务类型 npm 或者 shell 或者 process 等
+      // 需要执行的命令（对应于 package.json 中的 scripts 命令）
+      "script": "start",
+      "isBackground": true
+    }
+  ]
+}
