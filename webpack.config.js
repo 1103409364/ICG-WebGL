@@ -51,7 +51,7 @@ module.exports = function (env = {}) {
       );
     });
   } else {
-    plugins.push(new webpack.HotModuleReplacementPlugin(), new webpack.SourceMapDevToolPlugin({}));
+    plugins.push(new webpack.SourceMapDevToolPlugin({})); //new webpack.HotModuleReplacementPlugin(),
   }
 
   return {

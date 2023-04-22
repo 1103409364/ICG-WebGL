@@ -16,9 +16,9 @@
       "webRoot": "${workspaceFolder}",
       "runtimeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", // 你的 Chrome 可执行文件路径
       "runtimeArgs": [
-        "--user-data-dir=/Users/z/Library/Application Support/Google/Chrome" // 你的 Chrome 用户数据目录
+        "--user-data-dir=/Users/z/Library/Application Support/Google/Chrome", // 你的 Chrome 用户数据目录
         // "--disable-extensions",
-        // "--remote-debugging-port=9222"
+        "--remote-debugging-port=3000"
       ],
       "pathMapping": {
         "/_karma_webpack_": "${workspaceFolder}"
